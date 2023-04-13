@@ -1,0 +1,41 @@
+body {
+  background-color: #37587e;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  color: #fff;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.hfive {
+  color: #ffffff99 !important;
+}
+
+.logDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.nav {
+  background-color: #fff !important;
+  padding: 0 !important;
+}
+
+.sign {
+  background-color: #209dd8 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 2rem !important;
+}
+
+.tech-img {
+  width: 90%;
+  margin-top: 1rem;
+}
+
+#brand {
+  width: 5rem;
+}
