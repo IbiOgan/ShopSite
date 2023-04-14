@@ -7,6 +7,34 @@ body {
   margin: 0;
 }
 
+table {
+  border-collapse: collapse;
+  /* table-layout: fixed; */
+  width: 100%;
+  color: #fff !important;
+  font-size: 1rem !important;
+}
+
+td {
+  border: 2.8px solid #dddddd;
+  text-align: center;
+  padding: 8px;
+}
+
+th {
+  border: 2.8px solid #dddddd;
+  text-align: center;
+  padding: 8px;
+  font-weight: 700;
+  font-size: 1.2rem !important;
+  color: #000 !important;
+}
+
+tr:nth-child(even) {
+  background-color: #209dd8;
+  color: #000;
+}
+
 .hfive {
   color: #ffffff99 !important;
 }
