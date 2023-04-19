@@ -35,6 +35,13 @@ tr:nth-child(even) {
   color: #000;
 }
 
+/* .box-element {
+  box-shadow: hsl(0, 0%, 80%) 0 0 16px;
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 10px;
+} */
+
 .hfive {
   color: #ffffff99 !important;
 }
@@ -66,4 +73,20 @@ tr:nth-child(even) {
 
 #brand {
   width: 5rem;
+}
+
+#cart-icon {
+  width: 1.5rem;
+}
+
+#cart-total {
+  text-align: center;
+  color: red;
+  /* background-color: #209dd8; */
+  width: 20px;
+  height: 20px;
+  /* border-radius: 80%;
+  border-bottom: none; */
+  font-size: 1rem;
+  font-weight: 700;
 }

@@ -13,7 +13,7 @@
                 integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
                 crossorigin="anonymous"></script>
         <link rel="stylesheet" href="{% static 'ShopApp/styles/style.css' %}">
-        <title>Product Page</title>
+        <title>Order Page</title>
     </head>
     <body>
         {% include "includes/nav.html" %}
@@ -21,8 +21,8 @@
             <table class="table table-bordered mt-5 mb-4">
                 <thead>
                     <tr>
+                        <th>Order ID</th>
                         <th>Customer ID</th>
-                        <th>Email</th>
                     </tr>
                 </thead>
                 <tbody>

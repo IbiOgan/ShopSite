@@ -21,7 +21,10 @@ def product(request):
         page_list = paginator.page(1)
     except EmptyPage:
         page_list = paginator.page(paginator.num_pages)
-    return render(request, 'ShopApp/product.html', {'page_list': page_list, 'range': range(1, 11)})
+    return render(request, 'ShopApp/product.html', {
+        'page_list': page_list,
+        'range': range(1, 11)
+    })
 
 
 def customer(request):
@@ -35,7 +38,10 @@ def customer(request):
         page_list = paginator.page(1)
     except EmptyPage:
         page_list = paginator.page(paginator.num_pages)
-    return render(request, 'ShopApp/customer.html', {'page_list': page_list, 'range': range(1, 11)})
+    return render(request, 'ShopApp/customer.html', {
+        'page_list': page_list,
+        'range': range(1, 11)
+    })
 
 
 def order(request):
@@ -49,4 +55,22 @@ def order(request):
         page_list = paginator.page(1)
     except EmptyPage:
         page_list = paginator.page(paginator.num_pages)
-    return render(request, 'ShopApp/order.html', {'page_list': page_list, 'range': range(1, 11)})
+    return render(request, 'ShopApp/order.html', {
+        'page_list': page_list,
+        'range': range(1, 11)
+    })
+
+
+def store(request):
+    context = {}
+    return render(request, 'ShopApp/store.html', context)
+
+
+def cart(request):
+    context = {}
+    return render(request, 'ShopApp/cart.html', context)
+
+
+def checkout(request):
+    context = {}
+    return render(request, 'ShopApp/checkout.html', context)

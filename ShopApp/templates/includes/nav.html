@@ -20,7 +20,15 @@
                 <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
                 <a class="nav-link" href="{% url 'product' %}">Product</a>
                 <a class="nav-link" href="{% url 'customer' %}">Customer</a>
-                <a class="nav-link" href="#">Pricing</a>
+                <a class="nav-link" href="{% url 'order' %}">Orders</a>
+                <div class="d-flex flex-row">
+                    <a class="nav-link" href="{% url 'cart' %}">Cart
+                        <img id="cart-icon"
+                             alt="cart-icon"
+                             src="{% static 'ShopApp/images/cart.png' %}">
+                        <span id="cart-total"><sup id="cart-total">0</sup></span>
+                    </a>
+                </div>
                 {% comment %} <a class="nav-link disabled">Disabled</a> {% endcomment %}
             </div>
         </div>
