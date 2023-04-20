@@ -68,7 +68,7 @@ def store(request):
 
 def cart(request):
     context = {}
-    return render(request, 'ShopApp/cart.html', context)
+    return render(request, 'ShopApp/cart.html', {'range': range(1, 21)})
 
 
 def checkout(request):

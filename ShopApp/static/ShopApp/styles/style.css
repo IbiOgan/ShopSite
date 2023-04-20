@@ -8,21 +8,20 @@ body {
 }
 
 table {
-  border-collapse: collapse;
+  border-collapse: collapse !important;
   /* table-layout: fixed; */
   width: 100%;
   color: #fff !important;
   font-size: 1rem !important;
+  /* border: 2.8px solid #dddddd; */
 }
 
 td {
-  border: 2.8px solid #dddddd;
   text-align: center;
   padding: 8px;
 }
 
 th {
-  border: 2.8px solid #dddddd;
   text-align: center;
   padding: 8px;
   font-weight: 700;
@@ -89,4 +88,9 @@ tr:nth-child(even) {
   border-bottom: none; */
   font-size: 1rem;
   font-weight: 700;
+}
+
+#table1 {
+  table-layout: fixed;
+  border: none !important;
 }

@@ -4,105 +4,66 @@
     <h1>CART</h1>
     <div class="row">
         <div class="container">
-            <div class="ms-auto">
+            <div class="text-end mb-4">
                 <a class="btn btn-dark" href="{% url 'store' %}">&#x2190; Continue Shopping</a>
             </div>
-            <div>
-                <table class="table">
-                    <tr>
-                        <th>
-                            <h5>
-                                Items: <strong>{{ order.get_cart_items }}</strong>
-                            </h5>
-                        </th>
-                        <th>
-                            <h5>
-                                Total:<strong>${{ order.get_cart_total|floatformat:2 }}</strong>
-                            </h5>
-                        </th>
-                        <th>
-                            <a style="float:right;
-                                      margin:5px"
-                               class="btn btn-success"
-                               href="{% url 'checkout' %}">Checkout</a>
-                        </th>
-                    </tr>
-                </table>
+            <div class="row text-center">
+                <div class="col-6">
+                    <h5>
+                        Items: <strong>{{ order.get_cart_items }}</strong>
+                    </h5>
+                </div>
+                <div class="col-6">
+                    <h5>
+                        Total:<strong>${{ order.get_cart_total|floatformat:2 }}</strong>
+                    </h5>
+                </div>
             </div>
-        </div>
-        <div class="col-lg-12">
             <div>
-                {% comment %} class="box-element" {% endcomment %}
-                <a class="btn btn-dark" href="{% url 'store' %}">&#x2190; Continue Shopping</a>
-                <br>
-                <br>
-                <table class="table">
-                    <tr>
-                        <th>
-                            <h5>
-                                Items: <strong>{{ order.get_cart_items }}</strong>
-                            </h5>
-                        </th>
-                        <th>
-                            <h5>
-                                Total:<strong>${{ order.get_cart_total|floatformat:2 }}</strong>
-                            </h5>
-                        </th>
-                        <th>
-                            <a style="float:right;
-                                      margin:5px"
-                               class="btn btn-success"
-                               href="{% url 'checkout' %}">Checkout</a>
-                        </th>
-                    </tr>
+                <table id="table1" class="mt-1 mb-4" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>product_id</td>
+                            <td>product_name</td>
+                            <td>product.price</td>
+                            <td>
+                                <form action="" method="post">
+                                    <select class="form-select" id="quantity" name="quantity">
+                                        {% for number in range %}
+                                            <option value={{ number }}>{{ number }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </form>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger">Remove</button>
+                            </td>
+                        </tr>
+                        {% for product in page_list %}
+                            <tr>
+                                <td>{{ product.product_id }}</td>
+                                <td>{{ product.product_name }}</td>
+                                <td>{{ product.price }}</td>
+                                <td></td>
+                                <td>
+                                    <button type="button" class="btn btn-secondary">Add to Cart</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
                 </table>
-                </class=>
-                <br>
-                <div class="box-element">
-                    <div class="cart-row">
-                        <div style="flex:2"></div>
-                        <div style="flex:2">
-                            <strong>Item</strong>
-                        </div>
-                        <div style="flex:1">
-                            <strong>Price</strong>
-                        </div>
-                        <div style="flex:1">
-                            <strong>Quantity</strong>
-                        </div>
-                        <div style="flex:1">
-                            <strong>Total</strong>
-                        </div>
-                    </div>
-                    {% for item in items %}
-                        <div class="cart-row">
-                            <div style="flex:2">
-                                <img class="row-image" src="{{ item.product.imageURL }}">
-                            </div>
-                            <div style="flex:2">
-                                <p>{{ item.product.name }}</p>
-                            </div>
-                            <div style="flex:1">
-                                <p>${{ item.product.price|floatformat:2 }}</p>
-                            </div>
-                            <div style="flex:1">
-                                <p class="quantity">{{ item.quantity }}</p>
-                                <div class="quantity">
-                                    <img data-product="{{ item.product.id }}"
-                                         data-action="add"
-                                         class="chg-quantity update-cart"
-                                         src="{% static 'images/arrow-up.png' %}">
-                                    <img data-product="{{ item.product.id }}"
-                                         data-action="remove"
-                                         class="chg-quantity update-cart"
-                                         src="{% static 'images/arrow-down.png' %}">
-                                </div>
-                            </div>
-                            <div style="flex:1">
-                                <p>${{ item.get_total|floatformat:2 }}</p>
-                            </div>
-                        </div>
-                    {% endfor %}
+                <div class="text-center">
+                    <a class="btn btn-success" href="{% url 'checkout' %}">Checkout</a>
                 </div>
             </div>
         </div>
