@@ -67,8 +67,16 @@ def store(request):
 
 
 def cart(request):
-    context = {}
-    return render(request, 'ShopApp/cart.html', {'range': range(1, 21)})
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer_ref=customer,
+                                                     complete=False)
+        items = order.orderitem_set.all()
+    else:
+        items = []
+        # order = {'get_cart_total': 0, 'get_cart_items': 0}
+    context = {'range': range(1, 21), 'items': items}
+    return render(request, 'ShopApp/cart.html', context)
 
 
 def checkout(request):
