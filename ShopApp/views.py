@@ -11,7 +11,8 @@ def index(request):
 
 
 def product(request):
-    products = Product.objects.all()
+    # products = Product.objects.get_queryset().order_by('id')
+    products = Product.objects.all().order_by('id')
     paginator = Paginator(products, 10)
     page_number = request.GET.get('page', 1)
     page_list = paginator.page(page_number)
@@ -28,7 +29,7 @@ def product(request):
 
 
 def customer(request):
-    customers = Customer.objects.all()
+    customers = Customer.objects.all().order_by('id')
     paginator = Paginator(customers, 10)
     page_number = request.GET.get('page', 1)
     page_list = paginator.page(page_number)
@@ -45,7 +46,7 @@ def customer(request):
 
 
 def order(request):
-    orders = Order.objects.all()
+    orders = Order.objects.all().order_by('id')
     paginator = Paginator(orders, 10)
     page_number = request.GET.get('page', 1)
     page_list = paginator.page(page_number)
