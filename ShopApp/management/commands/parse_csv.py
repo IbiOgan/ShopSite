@@ -1,9 +1,9 @@
 import csv
 import os
 from pathlib import Path
-from django.db import models
 from django.core.management.base import BaseCommand, CommandError
 
+from django.contrib.auth.models import User
 from ShopApp.models import Product, Customer, Order
 
 
@@ -13,8 +13,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         # drop all data from tables
+        User.objects.all().delete()
         Product.objects.all().delete()
         Customer.objects.all().delete()
+        Order.objects.all().delete()
         # create table again
 
         # open the file to read it into the database
@@ -38,10 +40,21 @@ class Command(BaseCommand):
                     )
                     product.save()
 
-                    customer = Customer.objects.create(
-                        customer_id=row[7],
-                    )
-                    customer.save()
+                    # User.objects.filter(username=row[7]).exists() also works
+                    if not (User.objects.filter(username=row[7]).first()):
+
+                        user = User.objects.create_user(username=row[7],
+                                                        email='N/A',
+                                                        password='12345')
+                        user.is_active = True
+                        user.save()
+
+                        # shabby way to synch customer and user. instead use post_save signal
+                        # customer = Customer.objects.create(
+                        #     user=user,
+                        #     customer_id=row[7],
+                        # )
+                        # customer.save()
 
                     order = Order.objects.create(
                         order_id=row[2],

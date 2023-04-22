@@ -2,4 +2,75 @@
 {% load static %}
 {% block content %}
     <h1>Store</h1>
+    <div class="container">
+        <table class="table table-bordered mt-5 mb-4">
+            <thead>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Brand</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in page_list %}
+                    <tr>
+                        <td>{{ product.product_id }}</td>
+                        <td>{{ product.product_name }}</td>
+                        <td>{{ product.category }}</td>
+                        <td>{{ product.brand }}</td>
+                        <td>{{ product.price }}</td>
+                        <td>
+                            <button data-product={{ product.id }} data-action="add" type="button" class="btn btn-secondary update-cart">Add to Cart
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if page_list.has_other_pages %}
+            <ul class="pagination justify-content-center">
+                {% if page_list.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_list.previous_page_number }}">&laquo;</a>
+                    </li>
+                {% else %}
+                    <li class="disabled page-item">
+                        <span class="page-link">&laquo;</span>
+                    </li>
+                {% endif %}
+                {% for i in range %}
+                    {% if page_list.number == i %}
+                        <li class="page-item active">
+                            <span class="page-link">
+                                {{ i }} <span class="visually-hidden">(current)</span>
+                            </span>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_list.number > 10 %}
+                    <li class="page-item active">
+                        <span class="page-link">
+                            {{ page_list.number }} <span class="visually-hidden">(current)</span>
+                        </span>
+                    </li>
+                {% endif %}
+                {% if page_list.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_list.next_page_number }}">&raquo;</a>
+                    </li>
+                {% else %}
+                    <li class="disabled page-item">
+                        <span class="page-link">&raquo;</span>
+                    </li>
+                {% endif %}
+            </ul>
+        {% endif %}
+    </div>
 {% endblock content %}

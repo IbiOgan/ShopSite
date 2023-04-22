@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import JsonResponse
 from .models import Product, Customer, Order
 
 # Create your views here.
@@ -63,7 +64,20 @@ def order(request):
 
 
 def store(request):
-    context = {}
+    products = Product.objects.all().order_by('id')
+    paginator = Paginator(products, 10)
+    page_number = request.GET.get('page', 1)
+    page_list = paginator.page(page_number)
+    try:
+        page_list = paginator.page(page_number)
+    except PageNotAnInteger:
+        page_list = paginator.page(1)
+    except EmptyPage:
+        page_list = paginator.page(paginator.num_pages)
+    context = {
+        'page_list': page_list,
+        'range': range(1, 11)
+    }
     return render(request, 'ShopApp/store.html', context)
 
 
@@ -83,3 +97,7 @@ def cart(request):
 def checkout(request):
     context = {}
     return render(request, 'ShopApp/checkout.html', context)
+
+
+def updateItem(request):
+    return JsonResponse('Item was added', safe=False)

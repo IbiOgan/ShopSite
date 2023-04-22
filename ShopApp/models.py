@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User, auth
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -17,17 +19,29 @@ class Product(models.Model):
 
 
 class Customer(models.Model):
-    id = models.AutoField(primary_key=True)
+    # id = models.AutoField(primary_key=True)
     user = models.OneToOneField(User,
                                 null=True,
                                 blank=True,
                                 on_delete=models.CASCADE)
     customer_id = models.TextField(null=True, blank=True)
-    email = models.TextField(default="N/A")
-    password = models.CharField(max_length=100, default="N/A")
+    # email = models.TextField(default="N/A")
+    # password = models.CharField(max_length=100, default="N/A")
 
     def __str__(self):
-        return f"{self.id}, {self.customer_id}, {self.order_id}, {self.email}"
+        return f"{self.customer_id}"
+        # return f"{self.id}, {self.customer_id}, {self.order_id}, {self.email}"
+
+
+@receiver(post_save, sender=User)
+def create_customer(sender, instance, created, **kwargs):
+    if created:
+        Customer.objects.create(user=instance, customer_id=instance.username)
+
+
+@receiver(post_save, sender=User)
+def save_customer(sender, instance, **kwargs):
+    instance.customer.save()
 
 
 class Order(models.Model):
