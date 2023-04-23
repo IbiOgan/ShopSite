@@ -58,6 +58,10 @@ tr:nth-child(even) {
   padding: 0 !important;
 }
 
+.Qcontrol {
+  width: 1rem;
+}
+
 .sign {
   background-color: #209dd8 !important;
   color: #fff !important;

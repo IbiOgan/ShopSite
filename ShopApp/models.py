@@ -54,6 +54,18 @@ class Order(models.Model):
                                      on_delete=models.CASCADE)
     date_ordered = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def get_cart_total(self):
+        orderitems = self.orderitem_set.all()
+        total = sum([item.get_total for item in orderitems])
+        return total
+
+    @property
+    def get_cart_items(self):
+        orderitems = self.orderitem_set.all()
+        total = sum([item.quantity for item in orderitems])
+        return total
+
     def __str__(self):
         return f"{self.id}, {self.customer_ref}, {self.order_id}"
 
@@ -69,6 +81,11 @@ class OrderItem(models.Model):
                                 on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1, null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def get_total(self):
+        total = self.product.price * self.quantity
+        return total
 
     def __str__(self):
         return f"{self.product}, {self.quantity}, {self.date_added}"

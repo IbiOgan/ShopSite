@@ -7,18 +7,6 @@
             <div class="text-end mb-4">
                 <a class="btn btn-dark" href="{% url 'store' %}">&#x2190; Continue Shopping</a>
             </div>
-            <div class="row text-center">
-                <div class="col-6">
-                    <h5>
-                        Items: <strong>{{ order.get_cart_items }}</strong>
-                    </h5>
-                </div>
-                <div class="col-6">
-                    <h5>
-                        Total:<strong>${{ order.get_cart_total|floatformat:2 }}</strong>
-                    </h5>
-                </div>
-            </div>
             <div>
                 <table id="table1" class="mt-1 mb-4" cellspacing="0" cellpadding="0">
                     <thead>
@@ -27,11 +15,11 @@
                             <th>Product Name</th>
                             <th>Price</th>
                             <th>Quantity</th>
-                            <th></th>
+                            <th>Total</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        {% comment %} <tr>
                             <td>product_id</td>
                             <td>product_name</td>
                             <td>product.price</td>
@@ -48,23 +36,56 @@
                             <td>
                                 <button type="button" class="btn btn-danger">Remove</button>
                             </td>
-                        </tr>
-                        {% for product in items %}
+                        </tr> {% endcomment %}
+                        {% for item in items %}
                             <tr>
-                                <td>{{ product.product_id }}</td>
-                                <td>{{ product.product_name }}</td>
-                                <td>{{ product.price }}</td>
-                                <td></td>
+                                <td>{{ item.product.product_id }}</td>
+                                <td>{{ item.product.product_name }}</td>
+                                <td>£{{ item.product.price|floatformat:2 }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-secondary">Add to Cart</button>
+                                    <div class="d-flex flex-row justify-content-center">
+                                        <p class="mt-auto mb-auto quantity">{{ item.quantity }}</p>
+                                        <div class="quantity row">
+                                            <div class="col-12">
+                                                <img alt="up-button"
+                                                     data-product="{{ item.product.id }}"
+                                                     data-action="add"
+                                                     class="chg-quantity update-cart Qcontrol"
+                                                     src="{% static 'ShopApp/images/arrow-up.png' %}">
+                                            </div>
+                                            <div class="col-12">
+                                                <img alt="down-button"
+                                                     data-product="{{ item.product.id }}"
+                                                     data-action="remove"
+                                                     class="chg-quantity update-cart Qcontrol"
+                                                     src="{% static 'ShopApp/images/arrow-down.png' %}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>£{{ item.get_total|floatformat:2 }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-danger">Remove</button>
                                 </td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
-                <div class="text-center">
-                    <a class="btn btn-success" href="{% url 'checkout' %}">Checkout</a>
+            </div>
+            <div class="row text-center">
+                <div class="col-6">
+                    <h5>
+                        Total Items: <strong>{{ order.get_cart_items }}</strong>
+                    </h5>
                 </div>
+                <div class="col-6">
+                    <h5>
+                        Total Cost: <strong>£{{ order.get_cart_total|floatformat:2 }}</strong>
+                    </h5>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a class="btn btn-success" href="{% url 'checkout' %}">Checkout</a>
             </div>
         </div>
     </div>

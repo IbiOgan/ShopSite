@@ -26,7 +26,7 @@
                         <img id="cart-icon"
                              alt="cart-icon"
                              src="{% static 'ShopApp/images/cart.png' %}">
-                        <span id="cart-total"><sup id="cart-total">0</sup></span>
+                        <span id="cart-total"><sup id="cart-total">{{ cartItems }}</sup></span>
                     </a>
                 </div>
                 {% comment %} <a class="nav-link disabled">Disabled</a> {% endcomment %}
