@@ -12,7 +12,7 @@ table {
   /* table-layout: fixed; */
   width: 100%;
   color: #fff !important;
-  font-size: 1rem !important;
+  font-size: 1.1rem !important;
   /* border: 2.8px solid #dddddd; */
 }
 
@@ -25,7 +25,7 @@ th {
   text-align: center;
   padding: 8px;
   font-weight: 700;
-  font-size: 1.2rem !important;
+  font-size: 1.3rem !important;
   color: #000 !important;
 }
 
@@ -34,15 +34,29 @@ tr:nth-child(even) {
   color: #000;
 }
 
-/* .box-element {
-  box-shadow: hsl(0, 0%, 80%) 0 0 16px;
-  background-color: #fff;
+.box-element {
+  box-shadow: hsl(0, 0%, 80%) 0 0 8px;
+  background-color: #209dd8;
   border-radius: 4px;
   padding: 10px;
-} */
+}
+
+.chg-quantity:hover {
+  opacity: 0.3;
+}
+
+.form-field {
+  width: 250px;
+  display: inline-block;
+  padding: 5px;
+}
 
 .hfive {
   color: #ffffff99 !important;
+}
+
+.hidden {
+  display: none !important;
 }
 
 .logDiv {
@@ -60,6 +74,8 @@ tr:nth-child(even) {
 
 .Qcontrol {
   width: 1rem;
+  cursor: pointer;
+  transition: 0.1s;
 }
 
 .sign {
@@ -95,6 +111,11 @@ tr:nth-child(even) {
 }
 
 #table1 {
+  table-layout: fixed;
+  border: none !important;
+}
+
+#table2 {
   table-layout: fixed;
   border: none !important;
 }

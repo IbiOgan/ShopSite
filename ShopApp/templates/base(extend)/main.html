@@ -5,6 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Main Page</title>
+        <link rel="icon" type="image/x-icon" href="{% static "ShopApp/images/favicon.ico" %}">
         <meta name="description" content="">
         <meta name="viewport"
               content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1" />
@@ -41,5 +42,16 @@
                 integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
                 crossorigin="anonymous"></script>
         <script type="text/javascript" src="{% static 'ShopApp/js/cart.js' %}"></script>
+        <script type="text/javascript">
+            var adminStatus="{{request.user.is_superuser}}"
+            var staffStatus="{{request.user.is_staff}}"
+            if (adminStatus == "False" && staffStatus == "False") {
+                var adminViews = document.getElementsByClassName("admin-view");
+                for (var i = 0; i < adminViews.length; i++) {
+                    adminViews.item(i).style.display = "none";
+                }
+                console.log(adminViews)
+            }
+        </script>
     </body>
 </html>

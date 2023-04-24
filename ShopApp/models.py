@@ -92,7 +92,7 @@ class OrderItem(models.Model):
 
 
 class ShippingAddress(models.Model):
-    Customer = models.ForeignKey(Customer,
+    customer = models.ForeignKey(Customer,
                                  on_delete=models.SET_NULL,
                                  null=True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)

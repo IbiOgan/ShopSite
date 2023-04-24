@@ -29,7 +29,7 @@
                     {% for customer in page_list %}
                         <tr>
                             <td>{{ customer.customer_id }}</td>
-                            <td>{{ customer.email }}</td>
+                            <td>{{ customer.user.email }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
