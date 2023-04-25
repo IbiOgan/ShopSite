@@ -4,6 +4,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
 import json
 from .models import *
+from .utils import cookieCart, cartData, guestOrder
 
 # Create your views here.
 
@@ -66,16 +67,8 @@ def order(request):
 
 
 def store(request):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer_ref=customer,
-                                                     complete=False)
-        items = order.orderitem_set.all()
-        cartItems = order.get_cart_items
-    else:
-        items = []
-        order = {'get_cart_total': 0, 'get_cart_items': 0}
-        cartItems = order['get_cart_items']
+    data = cartData(request)
+    cartItems = data['cartItems']
 
     products = Product.objects.all().order_by('id')
     paginator = Paginator(products, 10)
@@ -96,32 +89,23 @@ def store(request):
 
 
 def cart(request):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer_ref=customer,
-                                                     complete=False)
-        items = order.orderitem_set.all()
-        cartItems = order.get_cart_items
-    else:
-        items = []
-        order = {'get_cart_total': 0, 'get_cart_items': 0}
-        cartItems = order['get_cart_items']
+    data = cartData(request)
+
+    cartItems = data['cartItems']
+    order = data['order']
+    items = data['items']
 
     context = {'order': order, 'items': items, 'cartItems': cartItems}
     return render(request, 'ShopApp/cart.html', context)
 
 
 def checkout(request):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer_ref=customer,
-                                                     complete=False)
-        items = order.orderitem_set.all()
-        cartItems = order.get_cart_items
-    else:
-        items = []
-        order = {'get_cart_total': 0, 'get_cart_items': 0}
-        cartItems = order['get_cart_items']
+    data = cartData(request)
+
+    cartItems = data['cartItems']
+    order = data['order']
+    items = data['items']
+
     context = {'order': order, 'items': items, 'cartItems': cartItems}
     return render(request, 'ShopApp/checkout.html', context)
 
@@ -131,8 +115,8 @@ def updateItem(request):
     productId = data['productId']
     action = data['action']
 
-    print('Action', action)
-    print('ProductId', productId)
+    # print('Action', action)
+    # print('ProductId', productId)
 
     customer = request.user.customer
     product = Product.objects.get(id=productId)
@@ -162,15 +146,15 @@ def processOrder(request):
         order, created = Order.objects.get_or_create(
             customer_ref=customer, complete=False)
     else:
-        print('User is not logged in')
-        # customer, order = guestOrder(request, data)
+        customer, order = guestOrder(request, data)
 
     total = float(data['form']['total'])
     order.order_id = str(transaction_id)
 
-    if total == order.get_cart_total:
+    if total == float(order.get_cart_total):
         order.complete = True
     order.save()
+
     ShippingAddress.objects.create(
         customer=customer,
         order=order,
