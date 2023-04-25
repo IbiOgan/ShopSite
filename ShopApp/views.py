@@ -15,6 +15,9 @@ def index(request):
 
 
 def product(request):
+    data = cartData(request)
+    cartItems = data['cartItems']
+
     # products = Product.objects.get_queryset().order_by('id')
     products = Product.objects.all().order_by('id')
     paginator = Paginator(products, 10)
@@ -26,10 +29,13 @@ def product(request):
         page_list = paginator.page(1)
     except EmptyPage:
         page_list = paginator.page(paginator.num_pages)
-    return render(request, 'ShopApp/product.html', {
+
+    context = {
         'page_list': page_list,
-        'range': range(1, 11)
-    })
+        'range': range(1, 11),
+        'cartItems': cartItems
+    }
+    return render(request, 'ShopApp/product.html', context)
 
 
 def customer(request):
