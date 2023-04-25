@@ -10,8 +10,12 @@ from .utils import cookieCart, cartData, guestOrder
 
 
 def index(request):
-
-    return render(request, 'ShopApp/index.html')
+    data = cartData(request)
+    cartItems = data['cartItems']
+    context = {
+        'cartItems': cartItems
+    }
+    return render(request, 'ShopApp/index.html', context)
 
 
 def product(request):
@@ -39,6 +43,9 @@ def product(request):
 
 
 def customer(request):
+    data = cartData(request)
+    cartItems = data['cartItems']
+
     customers = Customer.objects.all().order_by('id')
     paginator = Paginator(customers, 10)
     page_number = request.GET.get('page', 1)
@@ -49,13 +56,19 @@ def customer(request):
         page_list = paginator.page(1)
     except EmptyPage:
         page_list = paginator.page(paginator.num_pages)
-    return render(request, 'ShopApp/customer.html', {
+
+    context = {
         'page_list': page_list,
-        'range': range(1, 11)
-    })
+        'range': range(1, 11),
+        'cartItems': cartItems
+    }
+    return render(request, 'ShopApp/customer.html', context)
 
 
 def order(request):
+    data = cartData(request)
+    cartItems = data['cartItems']
+
     orders = Order.objects.all().order_by('id')
     paginator = Paginator(orders, 10)
     page_number = request.GET.get('page', 1)
@@ -66,10 +79,13 @@ def order(request):
         page_list = paginator.page(1)
     except EmptyPage:
         page_list = paginator.page(paginator.num_pages)
-    return render(request, 'ShopApp/order.html', {
+
+    context = {
         'page_list': page_list,
-        'range': range(1, 11)
-    })
+        'range': range(1, 11),
+        'cartItems': cartItems
+    }
+    return render(request, 'ShopApp/order.html', context)
 
 
 def store(request):
