@@ -46,6 +46,7 @@ def cartData(request):
                                                      complete=False)
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
+        
     else:
         cookieData = cookieCart(request)
 

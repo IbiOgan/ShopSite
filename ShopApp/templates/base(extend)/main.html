@@ -4,7 +4,10 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Main Page</title>
+        <title>
+            {% block title %}
+            {% endblock title %}
+        </title>
         <link rel="icon" type="image/x-icon" href="{% static "ShopApp/images/favicon.ico" %}">
         <meta name="description" content="">
         <meta name="viewport"
@@ -30,7 +33,7 @@
                 }
             return cookieValue;
             }
-            const csrftoken = getToken('csrftoken');
+            var csrftoken = getToken('csrftoken');
 
             function getCookie(name) {
 		        // Split cookie string and get all individual name=value pairs in an array

@@ -1,5 +1,8 @@
 {% extends "base(extend)/main.html" %}
 {% load static %}
+{% block title %}
+    Checkout
+{% endblock title %}
 {% block content %}
     <div class="container">
         <div class="box-element mt-5 mb-5">
@@ -63,16 +66,25 @@
                     <h4>Shipping Information:</h4>
                     <hr>
                     <div class="form-field mb-4">
-                        <input class="form-control"
+                        <input required
+                               class="form-control"
                                type="text"
                                name="address"
                                placeholder="Address..">
                     </div>
                     <div class="form-field mb-4">
-                        <input class="form-control" type="text" name="city" placeholder="City..">
+                        <input required
+                               class="form-control"
+                               type="text"
+                               name="city"
+                               placeholder="City..">
                     </div>
                     <div class="form-field mb-4">
-                        <input class="form-control" type="text" name="state" placeholder="State..">
+                        <input required
+                               class="form-control"
+                               type="text"
+                               name="state"
+                               placeholder="State..">
                     </div>
                     <div class="form-field mb-4">
                         <input class="form-control"
@@ -81,10 +93,11 @@
                                placeholder="Zip code..">
                     </div>
                     <div class="form-field">
-                        <input class="form-control"
+                        <input required
+                               class="form-control"
                                type="text"
                                name="country"
-                               placeholder="Zip code..">
+                               placeholder="Country..">
                     </div>
                 </div>
                 <hr>
@@ -105,7 +118,7 @@
     {% comment %} use visually-hidden for bootsrap or define your own hidden css class {% endcomment %}
     <script type="text/javascript">
         var total = '{{order.get_cart_total}}'
-        
+        var cartContents = '{{ cartItems }}'
         if (user != 'AnonymousUser'){
 		 	document.getElementById('user-info').innerHTML = ''
 		 }
@@ -113,10 +126,15 @@
         var form = document.getElementById('form')
         csrftoken = form.getElementsByTagName('input')[0].value
 		form.addEventListener('submit', function(e){
-	    	e.preventDefault()
-	    	console.log('Form Submitted...')
-	    	document.getElementById('form-button').classList.add("visually-hidden");
-	    	document.getElementById('payment-info').classList.remove("hidden");
+            if (cartContents != '0'){
+                e.preventDefault()
+                console.log('Form Submitted...')
+                document.getElementById('form-button').classList.add("visually-hidden");
+                document.getElementById('payment-info').classList.remove("hidden");
+            }
+            else{
+                alert('Cart is empty');
+            }
 	    })
 
          document.getElementById('make-payment').addEventListener('click', function(e){

@@ -1,7 +1,9 @@
 {% extends "base(extend)/main.html" %}
 {% load static %}
+{% block title %}
+    Store
+{% endblock title %}
 {% block content %}
-    <h1>Store</h1>
     <div class="container">
         <table class="table table-bordered mt-5 mb-4">
             <thead>
@@ -23,7 +25,7 @@
                         <td>{{ product.brand }}</td>
                         <td>{{ product.price }}</td>
                         <td>
-                            <button data-product={{ product.id }} data-action="add" type="button" class="btn btn-secondary update-cart">Add to Cart
+                            <button data-product={{ product.id }} data-action="add" type="button" class="btn btn-success update-cart">Add to Cart
                             </button>
                         </td>
                     </tr>

@@ -1,5 +1,8 @@
 {% extends "base(extend)/main.html" %}
 {% load static %}
+{% block title %}
+    Cart
+{% endblock title %}
 {% block content %}
     <div class="row mt-5">
         <div class="container">
@@ -64,7 +67,10 @@
                                 </td>
                                 <td>£{{ item.get_total|floatformat:2 }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-danger">Remove</button>
+                                    <button type="button"
+                                            data-product="{{ item.product.id }}"
+                                            data-action="removeAll"
+                                            class="btn btn-danger update-cart">Remove</button>
                                 </td>
                             </tr>
                         {% endfor %}
