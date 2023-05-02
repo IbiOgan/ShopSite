@@ -1,3 +1,8 @@
+a {
+  text-decoration: none !important;
+  color: #fff;
+}
+
 body {
   background-color: #37587e;
   font-family: "Roboto", sans-serif;
@@ -39,6 +44,20 @@ tr:nth-child(even) {
   background-color: #209dd8;
   border-radius: 4px;
   padding: 10px;
+}
+
+.box-element2 {
+  background-color: #000;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .chg-quantity:hover {
@@ -88,6 +107,23 @@ tr:nth-child(even) {
 .tech-img {
   width: 90%;
   margin-top: 1rem;
+}
+
+.thumbnail {
+  width: 100%;
+  height: 200px;
+  -webkit-box-shadow: -1px -3px 5px -2px rgba(214, 214, 214, 1);
+  -moz-box-shadow: -1px -3px 5px -2px rgba(214, 214, 214, 1);
+  box-shadow: -1px -3px 5px -2px rgba(214, 214, 214, 1);
+}
+
+.thumbnail2 {
+  width: 60%;
+  height: 90px;
+}
+
+.thumbnail3 {
+  width: 95%;
 }
 
 #brand {

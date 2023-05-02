@@ -1,0 +1,37 @@
+{% extends "base(extend)/main.html" %}
+{% load static %}
+{% block title %}
+    Product Details
+{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-lg-7">
+                <img class="thumbnail3"
+                     alt="product-image"
+                     src="{% static 'ShopApp/images/KZLogo.PNG' %}">
+            </div>
+            <div class="col-lg-5 text-center">
+                <hr>
+                <h3>{{ product.product_name }}</h3>
+                <hr>
+                <h5 class="mt-4">Brand: {{ product.brand }}</h5>
+                <h5 class="mt-4">Category: {{ product.category }}</h5>
+                <h5 class="mt-4">Price: {{ product.price }}</h5>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button data-product="{{ product.id }}"
+                            data-action="add"
+                            class="btn btn-success add-btn update-cart mt-4">Add to Cart</button>
+                    <a href="{% url 'store' %}" class="btn btn-primary mt-2">&#x2190; Continue Shopping</a>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-lg-12 text-center">
+                <h4>Product Description</h4>
+                <hr>
+                <p>{{ description }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

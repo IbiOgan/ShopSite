@@ -5,7 +5,33 @@
 {% endblock title %}
 {% block content %}
     <div class="container">
-        <table class="table table-bordered mt-5 mb-4">
+        <div class="row">
+            {% for product in page_list %}
+                <div class="col-lg-4 mt-5">
+                    {% comment %} src="{{ product.imageURL }}" {% endcomment %}
+                    <a href="{% url 'product_detail' product_id=product.id %}">
+                        <img class="thumbnail"
+                             alt="product-image"
+                             src="{% static 'ShopApp/images/KZLogo.PNG' %}">
+                        <div class="box-element2 product">
+                            <h6>
+                                <strong>{{ product.product_name }}</strong>
+                            </h6>
+                        </a>
+                        <hr>
+                        <button data-product="{{ product.id }}"
+                                data-action="add"
+                                class="btn btn-outline-info add-btn update-cart me-1">Add to Cart</button>
+                        <a class="btn btn-outline-success"
+                           href="{% url 'product_detail' product_id=product.id %}">View</a>
+                        <h4 style="display: inline-block; float: right">
+                            <strong>${{ product.price }}</strong>
+                        </h4>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% comment %} <table class="table table-bordered mt-5 mb-4">
             <thead>
                 <tr>
                     <th>Product ID</th>
@@ -31,9 +57,9 @@
                     </tr>
                 {% endfor %}
             </tbody>
-        </table>
+        </table> {% endcomment %}
         {% if page_list.has_other_pages %}
-            <ul class="pagination justify-content-center">
+            <ul class="pagination justify-content-center mt-4">
                 {% if page_list.has_previous %}
                     <li class="page-item">
                         <a class="page-link" href="?page={{ page_list.previous_page_number }}">&laquo;</a>

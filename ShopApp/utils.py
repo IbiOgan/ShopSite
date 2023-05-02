@@ -1,5 +1,19 @@
 import json
 from .models import *
+# from faker import Faker
+# from faker.providers import lorem
+
+
+def productDetail(request, id):
+    product = Product.objects.get(id=id)
+    # fake = Faker()
+    # for _ in range(5):
+    #     print(fake.paragraph(nb_sentences=5, variable_nb_sentences=False))
+    # print(fake.sentence())
+    description = """Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend.
+"""
+    return {'product': product, 'description': description}
 
 
 def cookieCart(request):
@@ -46,7 +60,7 @@ def cartData(request):
                                                      complete=False)
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
-        
+
     else:
         cookieData = cookieCart(request)
 

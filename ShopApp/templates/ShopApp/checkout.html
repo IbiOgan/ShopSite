@@ -15,6 +15,7 @@
             <table id="table2" class="mt-1 mb-4" cellspacing="0" cellpadding="0">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Product Name</th>
                         <th>Price</th>
                         <th>Quantity</th>
@@ -23,6 +24,11 @@
                 <tbody>
                     {% for item in items %}
                         <tr>
+                            <td>
+                                <img class="thumbnail2"
+                                     alt="product-image"
+                                     src="{% static 'ShopApp/images/KZLogo.PNG' %}">
+                            </td>
                             <td>{{ item.product.product_name }}</td>
                             <td>{{ item.product.price }}</td>
                             <td>x{{ item.quantity }}</td>

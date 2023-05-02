@@ -17,11 +17,12 @@
               integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
               crossorigin="anonymous">
         <link rel="stylesheet" href="{% static 'ShopApp/styles/style.css' %}">
-        <script type="text/javascript">var user = '{{request.user}}'
+        <script type="text/javascript">
+            var user = '{{request.user}}'
             function getToken(name) {
                 let cookieValue = null;
                 if (document.cookie && document.cookie !== '') {
-                    const cookies = document.cookie.split(';');
+                    var cookies = document.cookie.split(';');
                     for (let i = 0; i < cookies.length; i++) {
                         const cookie = cookies[i].trim();
                         // Does this cookie string begin with the name we want?

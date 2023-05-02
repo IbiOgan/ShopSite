@@ -8,10 +8,10 @@ from django.dispatch import receiver
 
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
-    product_id = models.TextField()
-    product_name = models.TextField()
-    category = models.TextField()
-    brand = models.TextField()
+    product_id = models.CharField(max_length=200, null=False)
+    product_name = models.CharField(max_length=200, null=False)
+    category = models.CharField(max_length=200, null=False)
+    brand = models.CharField(max_length=200, null=False)
     price = models.FloatField(default=0.0)
 
     def __str__(self):
@@ -24,7 +24,7 @@ class Customer(models.Model):
                                 null=True,
                                 blank=True,
                                 on_delete=models.CASCADE)
-    customer_id = models.TextField(null=True, blank=True)
+    customer_id = models.CharField(max_length=200, null=True, blank=True)
     # email = models.TextField(default="N/A")
     # password = models.CharField(max_length=100, default="N/A")
 
@@ -46,7 +46,7 @@ def save_customer(sender, instance, **kwargs):
 
 class Order(models.Model):
     id = models.AutoField(primary_key=True)
-    order_id = models.TextField(null=True, blank=True)
+    order_id = models.CharField(max_length=200, null=True, blank=True)
     complete = models.BooleanField(default=False, null=True, blank=False)
     customer_ref = models.ForeignKey(Customer,
                                      null=True,

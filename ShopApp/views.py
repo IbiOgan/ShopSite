@@ -4,7 +4,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
 import json
 from .models import *
-from .utils import cookieCart, cartData, guestOrder
+from .utils import cookieCart, cartData, guestOrder, productDetail
 
 # Create your views here.
 
@@ -40,6 +40,20 @@ def product(request):
         'cartItems': cartItems
     }
     return render(request, 'ShopApp/product.html', context)
+
+
+def product_detail(request, product_id):
+    product_details = productDetail(request, product_id)
+    product = product_details['product']
+    description = product_details['description']
+    data = cartData(request)
+    cartItems = data['cartItems']
+    context = {
+        'cartItems': cartItems,
+        'product': product,
+        'description': description,
+    }
+    return render(request, 'ShopApp/product_detail.html', context)
 
 
 def customer(request):
