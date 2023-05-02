@@ -109,7 +109,6 @@ def store(request):
     products = Product.objects.all().order_by('id')
     paginator = Paginator(products, 10)
     page_number = request.GET.get('page', 1)
-    page_list = paginator.page(page_number)
     try:
         page_list = paginator.page(page_number)
     except PageNotAnInteger:
@@ -120,6 +119,39 @@ def store(request):
         'page_list': page_list,
         'range': range(1, 11),
         'cartItems': cartItems
+    }
+    return render(request, 'ShopApp/store.html', context)
+
+
+def search(request):
+    data = cartData(request)
+    cartItems = data['cartItems']
+    search_brand = request.GET.get('brand', request.GET.get('brand1'))
+    search_word = request.GET.get('searchWord', request.GET.get('searchWord1'))
+    if search_brand == "All Brands":
+        products = Product.objects.filter(
+            product_name__contains=search_word).order_by('id')
+    else:
+        products = Product.objects.filter(
+            brand=search_brand).filter(product_name__contains=search_word).order_by('id')
+    paginator = Paginator(products, 10)
+    page_number = request.GET.get('page', 1)
+    if paginator.num_pages > 10:
+        page_range = 11
+    else:
+        page_range = paginator.num_pages + 1
+    try:
+        page_list = paginator.page(page_number)
+    except PageNotAnInteger:
+        page_list = paginator.page(1)
+    except EmptyPage:
+        page_list = paginator.page(paginator.num_pages)
+    context = {
+        'page_list': page_list,
+        'range': range(1, page_range),
+        'cartItems': cartItems,
+        'brand1': search_brand,
+        'searchWord1': search_word
     }
     return render(request, 'ShopApp/store.html', context)
 

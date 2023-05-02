@@ -97,6 +97,18 @@ tr:nth-child(even) {
   transition: 0.1s;
 }
 
+.search-width {
+  width: 20rem;
+  margin-left: 0;
+  margin-right: 5rem;
+}
+
+.search-select {
+  width: 6rem !important;
+  margin-left: 5rem;
+  margin-right: 0;
+}
+
 .sign {
   background-color: #209dd8 !important;
   color: #fff !important;

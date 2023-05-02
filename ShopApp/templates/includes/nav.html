@@ -6,6 +6,26 @@
                  id="brand"
                  alt="brand-logo">
         </a>
+        <form class="d-flex" role="search" action="{% url 'search' %}">
+            {% csrf_token %}
+            <select class="form-select-sm search-select" id="brand" name="brand">
+                <option value="All Brands">All Brands</option>
+                <option value="samsung">samsung</option>
+                <option value="vivo">vivo</option>
+                <option value="hp">hp</option>
+                <option value="asus">asus</option>
+                <option value="apple">apple</option>
+                <option value="sony">sony</option>
+                {% comment %} {% for year in years %}<option value="{{ year }}">{{ year }}</option>{% endfor %} {% endcomment %}
+            </select>
+            <input class="form-control me-2 search-width"
+                   type="search"
+                   placeholder="Search KZ Electronics Store"
+                   aria-label="Search"
+                   id="searchWord"
+                   name="searchWord">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
         <button class="navbar-toggler"
                 type="button"
                 data-bs-toggle="collapse"
