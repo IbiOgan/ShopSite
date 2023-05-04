@@ -4,6 +4,7 @@ from ShopApp import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('logout/', views.logout_page, name='logout'),
     path('product/', views.product, name='product'),
     path('product_detail/<product_id>/',
          views.product_detail, name='product_detail'),

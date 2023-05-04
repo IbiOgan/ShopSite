@@ -1,11 +1,13 @@
-import datetime
-from django.shortcuts import render
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.http import JsonResponse
-import json
-from .models import *
 from .utils import cookieCart, cartData, guestOrder, productDetail
-
+from .models import *
+import json
+from django.http import JsonResponse
+import datetime
+from django.shortcuts import render, redirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 # Create your views here.
 
 
@@ -15,7 +17,29 @@ def index(request):
     context = {
         'cartItems': cartItems
     }
-    return render(request, 'ShopApp/index.html', context)
+
+    if request.user.is_authenticated:
+        return redirect('store')
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        # print(username, password)
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('store')
+        else:
+            messages.info(request, 'Username OR password is incorrect')
+            return redirect('index')
+    else:
+        return render(request, 'ShopApp/index.html', context)
+
+
+def logout_page(request):
+    logout(request)
+    return redirect('index')
+    # Redirect to a success page.
 
 
 def product(request):

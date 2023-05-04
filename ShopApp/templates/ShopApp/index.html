@@ -5,38 +5,46 @@
 {% endblock title %}
 {% block content %}
     <div class="container mt-5">
+        {% if messages %}
+            {% for message in messages %}<div class="alert alert-{{ message.tags }}">{{ message }}</div>{% endfor %}
+        {% endif %}
         <div class="row">
             <div class="col-lg-6 d-flex flex-column justify-content-center">
                 <h1>One Stop Shop for all Electronics</h1>
                 <h5 class="hfive">Everyday Electronics</h5>
-                <img src="{% static 'ShopApp/images/tech.png' %}"
+                <img src="{% static 'ShopApp/images/tech.png' %} "
                      class="tech-img"
                      alt="Tech-Photo">
             </div>
-            <div class="col-lg-6 d-flex justify-content-center">
-                <div class="logDiv">
-                    <form>
-                        <div class="form-outline mb-4">
-                            <input type="email"
-                                   id="username"
-                                   class="form-control form-control-lg"
-                                   placeholder="email" />
-                        </div>
-                        <div class="form-outline mb-4">
-                            <input type="password"
-                                   id="password"
-                                   class="form-control form-control-lg"
-                                   placeholder="password" />
-                        </div>
-                        <button type="button" class="btn btn-lg col-8 mb-4 sign">Sign in</button>
-                        <h5 class="hfive mb-4">
-                            Not a member? <a class="link-primary" href="#!">Register</a>
-                        </h5>
-                        <h5 class="hfive mb-4">Or</h5>
-                        <a href="{% url 'store' %}" class="btn btn-lg col-8 mb-4 sign">shop as guest</a>
-                    </form>
+            {% if request.user.is_anonymous %}
+                <div class="col-lg-6 d-flex justify-content-center">
+                    <div class="logDiv">
+                        <form action="{% url 'index' %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-outline mb-4">
+                                <input type="text"
+                                       id="username"
+                                       name="username"
+                                       class="form-control form-control-lg"
+                                       placeholder="email" />
+                            </div>
+                            <div class="form-outline mb-4">
+                                <input type="password"
+                                       id="password"
+                                       name="password"
+                                       class="form-control form-control-lg"
+                                       placeholder="password" />
+                            </div>
+                            <button type="submit" class="btn btn-lg col-8 mb-4 sign">Sign in</button>
+                            <h5 class="hfive mb-4">
+                                Not a member? <a class="link-primary" href="#!">Register</a>
+                            </h5>
+                            <h5 class="hfive mb-4">Or</h5>
+                            <a href="{% url 'store' %}" class="btn btn-lg col-8 mb-4 sign">shop as guest</a>
+                        </form>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
     </div>
 {% endblock content %}
