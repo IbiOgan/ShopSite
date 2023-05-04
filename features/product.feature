@@ -1,8 +1,8 @@
 Feature: checking products
 
     Scenario: view products
-        Given we want to view products on the site
-        When we visit the product page
+        Given Navigate to the index page
+        When Click on the products link
         Then Then it loads successfully
 
     # Scenario: view product details

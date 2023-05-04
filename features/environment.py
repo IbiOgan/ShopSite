@@ -11,6 +11,14 @@ from django.test.testcases import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
+import os
+import threading
+from wsgiref import simple_server
+from wsgiref.simple_server import WSGIRequestHandler
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from server import app
+
 os.environ["DJANGO_SETTINGS_MODULE"] = "ShopSite.settings"
 django.setup()
 
@@ -31,26 +39,37 @@ chrome_options.add_argument("--proxy-bypass-list=*")
 
 
 def before_all(context):
-    use_fixture(django_test_runner, context)
-    browser = webdriver.Chrome(
+    # use_fixture(django_test_runner, context)
+    # browser = webdriver.Chrome(
+    #     options=chrome_options, executable_path=CHROME_DRIVER)
+    # browser.set_page_load_timeout(time_to_wait=200)
+    # context.browser = browser
+    context.server = simple_server.WSGIServer(("", 5000), WSGIRequestHandler)
+    context.server.set_app(app)
+    context.pa_app = threading.Thread(target=context.server.serve_forever)
+    context.pa_app.start()
+
+    context.browser = webdriver.Chrome(
         options=chrome_options, executable_path=CHROME_DRIVER)
-    browser.set_page_load_timeout(time_to_wait=200)
-    context.browser = browser
+    context.browser.set_page_load_timeout(time_to_wait=200)
 
 
-def before_scenario(context, scenario):
-    context.test = TestCase()
-    context.test.setUpClass()
-    use_fixture(django_test_case, context)
+# def before_scenario(context, scenario):
+#     context.test = TestCase()
+#     context.test.setUpClass()
+#     use_fixture(django_test_case, context)
 
 
-def after_scenario(context, scenario):
-    context.test.tearDownClass()
-    del context.test
+# def after_scenario(context, scenario):
+#     context.test.tearDownClass()
+#     del context.test
 
 
 def after_all(context):
+    # context.browser.quit()
     context.browser.quit()
+    context.server.shutdown()
+    context.pa_app.join()
 
 
 @fixture
