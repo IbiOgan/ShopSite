@@ -1,0 +1,29 @@
+{% extends "base(extend)/main.html" %}
+{% load static %}
+{% block title %}
+    Profile
+{% endblock title %}
+{% block content %}
+    <div class="container mt-5">
+        <h2>My Orders</h2>
+        <table class="table table-bordered mt-3 mb-4">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Date Ordered</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td>
+                            <a style="text-decoration: underline !important"
+                               href="{% url 'order_detail' order_id=order.id %}">{{ order.id }}</a>
+                        </td>
+                        <td>{{ order.date_ordered }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}

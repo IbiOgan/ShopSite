@@ -8,6 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
 
@@ -42,6 +43,65 @@ def logout_page(request):
     # Redirect to a success page.
 
 
+def register(request):
+    data = cartData(request)
+    cartItems = data['cartItems']
+    context = {
+        'cartItems': cartItems
+    }
+    if request.user.is_authenticated:
+        return redirect('store')
+
+    # if request.method == 'POST':
+    #     form = UserCreationForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #         username = form.cleaned_data['username']
+    #         password = form.cleaned_data.get('password1')
+    #         email = form.cleaned_data['email']
+    #         user = authenticate(username=username, password=password)
+    #         login(request, user)
+    #         messages.success(
+    #             request, "Your account has been successfully created.")
+    #         return redirect('store')
+    # else:
+    #     form = UserCreationForm()
+
+    # context = {
+    #     'cartItems': cartItems,
+    #     'form': form
+    # }
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+
+        if password1 == password2:
+            if User.objects.filter(username=username).exists():
+                messages.info(request, 'Username Taken')
+                return redirect('register')
+            elif User.objects.filter(email=email).exists():
+                messages.info(request, 'Email Taken')
+                return redirect('register')
+            else:
+                user = User.objects.create_user(
+                    username=username, email=email, password=password1)
+                user.is_active = True
+                user.save()
+                user = authenticate(username=username, password=password1)
+                login(request, user)
+                messages.success(request, "Registration successful.")
+                return redirect('index')
+        else:
+            messages.info(request, 'Password not matching..')
+            return redirect('register')
+        # return redirect('/')
+
+    return render(request, 'ShopApp/register.html', context)
+
+
+@login_required(login_url='index')
 def product(request):
     data = cartData(request)
     cartItems = data['cartItems']
@@ -80,6 +140,41 @@ def product_detail(request, product_id):
     return render(request, 'ShopApp/product_detail.html', context)
 
 
+@login_required(login_url='index')
+def order_detail(request, order_id):
+    orderItems = OrderItem.objects.filter(order=order_id)
+    data = cartData(request)
+    cartItems = data['cartItems']
+    context = {
+        'cartItems': cartItems,
+        'order_id': order_id,
+        'orderItems': orderItems,
+    }
+    return render(request, 'ShopApp/order_detail.html', context)
+
+
+@login_required(login_url='index')
+def profile(request):
+    # product_details = productDetail(request, product_id)
+    # product = product_details['product']
+    # description = product_details['description']
+    customer = request.user.customer
+    orders = Order.objects.filter(
+        customer_ref=customer, complete=True).order_by('-date_ordered')
+    # for order in orders:
+    #     print(order)
+    #     print(order.orderitem_set.all())
+    # orderItems = OrderItem.objects.filter(order_ref=orders)
+    data = cartData(request)
+    cartItems = data['cartItems']
+    context = {
+        'cartItems': cartItems,
+        'orders': orders,
+    }
+    return render(request, 'ShopApp/profile.html', context)
+
+
+@login_required(login_url='index')
 def customer(request):
     data = cartData(request)
     cartItems = data['cartItems']
@@ -103,6 +198,7 @@ def customer(request):
     return render(request, 'ShopApp/customer.html', context)
 
 
+@login_required(login_url='index')
 def order(request):
     data = cartData(request)
     cartItems = data['cartItems']

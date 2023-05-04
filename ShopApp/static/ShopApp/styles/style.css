@@ -98,7 +98,7 @@ tr:nth-child(even) {
 }
 
 .search-width {
-  width: 20rem;
+  width: 16rem;
   margin-left: 0;
   margin-right: 5rem;
 }
@@ -117,7 +117,7 @@ tr:nth-child(even) {
 }
 
 .tech-img {
-  width: 90%;
+  width: 95%;
   margin-top: 1rem;
 }
 

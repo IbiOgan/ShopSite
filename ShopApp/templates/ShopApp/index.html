@@ -10,8 +10,8 @@
         {% endif %}
         <div class="row">
             <div class="col-lg-6 d-flex flex-column justify-content-center">
-                <h1>One Stop Shop for all Electronics</h1>
-                <h5 class="hfive">Everyday Electronics</h5>
+                <h1 class="mb-2">One Stop Shop for all Electronics</h1>
+                <h5 class="hfive mb-3">Everyday Electronics</h5>
                 <img src="{% static 'ShopApp/images/tech.png' %} "
                      class="tech-img"
                      alt="Tech-Photo">
@@ -22,11 +22,12 @@
                         <form action="{% url 'index' %}" method="post">
                             {% csrf_token %}
                             <div class="form-outline mb-4">
-                                <input type="text"
+                                <input required
+                                       type="text"
                                        id="username"
                                        name="username"
                                        class="form-control form-control-lg"
-                                       placeholder="email" />
+                                       placeholder="Username" />
                             </div>
                             <div class="form-outline mb-4">
                                 <input type="password"
@@ -37,7 +38,7 @@
                             </div>
                             <button type="submit" class="btn btn-lg col-8 mb-4 sign">Sign in</button>
                             <h5 class="hfive mb-4">
-                                Not a member? <a class="link-primary" href="#!">Register</a>
+                                Not a member? <a class="btn btn-success ms-3" href="{% url 'register' %}">Register</a>
                             </h5>
                             <h5 class="hfive mb-4">Or</h5>
                             <a href="{% url 'store' %}" class="btn btn-lg col-8 mb-4 sign">shop as guest</a>
