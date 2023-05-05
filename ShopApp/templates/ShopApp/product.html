@@ -13,7 +13,6 @@
                     <th>Category</th>
                     <th>Brand</th>
                     <th>Price</th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -24,9 +23,9 @@
                         <td>{{ product.category }}</td>
                         <td>{{ product.brand }}</td>
                         <td>{{ product.price }}</td>
-                        <td>
+                        {% comment %} <td>
                             <button type="button" class="btn btn-secondary">Add to Cart</button>
-                        </td>
+                        </td> {% endcomment %}
                     </tr>
                 {% endfor %}
             </tbody>
