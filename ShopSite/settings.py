@@ -18,6 +18,7 @@ from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+# static_dir = str(BASE_DIR) + '/ShopApp'
 load_dotenv(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
@@ -29,7 +30,7 @@ SECRET_KEY = 'django-insecure-q2^@j^rv0j6p)ew-4z(h0$3p%_hl2yp%_!o7=*%(q9&ge_)ajl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['kzelectronics.onrender.com']
+ALLOWED_HOSTS = ['kzelectronics.onrender.com', '127.0.0.1']
 
 CSRF_TRUSTED_ORIGINS = [
     'https://kzelectronics.onrender.com', 'http://127.0.0.1']

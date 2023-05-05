@@ -5,7 +5,7 @@
 {% endblock title %}
 {% block content %}
     <div class="container">
-        <h1 id="storePage" class="">Store</h1>
+        <h1 style="font-size:1px !important" id="storer" class="hidden">Store</h1>
         {% if messages %}
             {% for message in messages %}<div class="alert alert-{{ message.tags }}">{{ message }}</div>{% endfor %}
         {% endif %}

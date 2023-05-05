@@ -40,7 +40,7 @@
                 {% if user.is_anonymous %}
                     <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
                 {% endif %}
-                <a id="store_Page" class="nav-link" href="{% url 'store' %}">Store</a>
+                <a id="storePages" class="nav-link" href="{% url 'store' %}">Store</a>
                 <a class="nav-link admin-view" href="{% url 'product' %}">Products</a>
                 <a class="nav-link admin-view" href="{% url 'customer' %}">Customers</a>
                 <a class="nav-link admin-view" href="{% url 'order' %}">Orders</a>
@@ -52,7 +52,9 @@
                         <span id="cart-total"><sup id="cart-total">{{ cartItems }}</sup></span>
                     </a>
                 </div>
-                {% if user.is_superuser %}<a class="nav-link" href="/admin">Admin</a>{% endif %}
+                {% if user.is_superuser %}
+                    <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+                {% endif %}
                 {% if user.is_authenticated %}
                     <a class="nav-link" href="{% url 'profile' %}">Profile</a>
                     <a class="nav-link" href="{% url 'logout' %}">Logout</a>
