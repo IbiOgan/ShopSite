@@ -126,6 +126,27 @@ def product(request):
     return render(request, 'ShopApp/product.html', context)
 
 
+@login_required(login_url='index')
+def dashboard(request):
+    data = cartData(request)
+    cartItems = data['cartItems']
+    products = Product.objects.all().count()
+    orders = Order.objects.all().count()
+    customers = Customer.objects.all().count()
+    staffs = User.objects.filter(is_staff=True).count()*400
+    print(products, orders, customers, staffs)
+    context = {
+        'cartItems': cartItems,
+        'products': products,
+        'orders': orders,
+        'customers': customers,
+        'staffs': staffs,
+    }
+    if not (request.user.is_superuser):
+        return redirect('store')
+    return render(request, 'ShopApp/dashboard.html', context)
+
+
 def product_detail(request, product_id):
     product_details = productDetail(request, product_id)
     product = product_details['product']

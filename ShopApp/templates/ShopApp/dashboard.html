@@ -1,0 +1,47 @@
+{% extends "base(extend)/main.html" %}
+{% load static %}
+{% block title %}
+    Dashboard
+{% endblock title %}
+{% block content %}
+    <div class="container">
+        <h2>Dashboard</h2>
+        <div>
+            <canvas id="myChart"></canvas>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+  Chart.defaults.font.size = 20;
+  Chart.defaults.color = 'rgb(0, 0, 0)';
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Customers', 'Products', 'Orders', 'Staff'],
+      datasets: [{
+        label: 'KZ Electronics Sales',
+        data: [{{customers}}, {{products}}, {{orders}}, {{staffs}}],
+        fontColor: 'rgb(0, 0, 0)',
+        borderColor: 'rgb(114, 47, 55)',
+        backgroundColor:  [
+      'rgba(255, 99, 132, 0.9)',
+      'rgba(255, 159, 64, 0.9)',
+      'rgba(95, 192, 122, 30)',
+      'rgba(153, 102, 255, 0.9)'
+    ],
+        color: 'rgb(33, 20, 87)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+        scales: {
+            y: {
+            beginAtZero: true
+            }
+        }
+    }
+  });
+        </script>
+    </div>
+{% endblock content %}
