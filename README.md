@@ -20,9 +20,7 @@ Here are some snippets of code I used while setting up this virtual environment.
 Running of App. Here are some snippets of code I used while setting up this flask application.
 
   ```python
-  export FLASK_APP=server.py
-  export FLASK_DEBUG=True
-  python3 -m flask run --host=0.0.0.0
+  python3 manage.py runserver
   ```
 
 Here are some snippets of code I used while setting up the GitHub repo.
@@ -52,36 +50,57 @@ Create features folder. Create driver folder and download chrome driver. Create 
 Create product.feature:
 
   ```python
-  Feature: Product Page
-  """ 
-  Confirm that we can browse the Product related page on our site
-  """
-  Scenario: success for visiting index(Home) and Product pages
-  Given I navigate to the index page
-  When I click on the link to Product
-  Then I should see the table for Products
-Create steps folder. Create product.py
-  from behave import given, when, then
-  @given(u'I navigate to the home page')
-  def nav(context):
-  """ 
-  Navigate to the index page
-  """
-  context.browser.get('http://localhost:5000')
-  @when(u'I click on the link to product')
-  def click(context):
-  """ 
-  Find the desired link
-  """
-  context.browser.find_element_by_id('product').click()
-  @then(u'I should see the table for products')
-  def details(context):
-  """ 
-  if successful, then we should be directed to the product page
-  """
-  # use print(context.browser.page_source) to aid debugging
-  print(context.browser.page_source)
-  assert context.browser.current_url == 'http://localhost:5000/product'
-  assert 'Product ID' in context.browser.page_source
+  Feature: checking login functionality
+
+    Scenario: view products
+        Given Go to the login page
+        When I Enter username "dave" and password "dave"
+        And Click on login button
+        Then user successfully logged in
+        
+     import urllib
+from urllib.parse import urljoin
+from behave import given, when, then
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from pathlib import Path
+
+
+@given(u'Go to the login page')
+def step_impl(context):
+    """ 
+    Navigate to the login page
+    """
+    context.base_url = f'{context.test_case.live_server_url}/'
+    context.browser.get(context.base_url)
+
+
+@when(u'I Enter username "{user}" and password "{password}"')
+def step_impl(context, user, password):
+    """ 
+    Find the desired fields and enter the values
+    """
+    context.browser.find_element(By.ID, "username").send_keys(user)
+    context.browser.find_element(By.ID, "password").send_keys(password)
+
+
+@when(u'Click on login button')
+def step_impl(context):
+    """ 
+    Find the login button and click on it
+    """
+    xpath = "//button[contains(text(),'Sign in')]"
+    context.browser.find_element(
+        By.XPATH, xpath).click()
+
+
+@then(u'user successfully logged in')
+def step_impl(context):
+    """ 
+    the user should be logged in and redirected to the store page
+    """
+    assert 'Profile' in context.browser.page_source
+    assert context.browser.current_url == f'{context.base_url}store/'
+
   ```
 run behave command in terminal to do testing.
